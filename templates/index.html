@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>スマスロ期待値計算</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1>スマスロ期待値計算</h1>
+<form method="POST">
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>台名</th>
+            <th>現在ゲーム数</th>
+        </tr>
+        {% for machine in machines %}
+        <tr>
+            <td>{{ machine.name }}</td>
+            <td><input type="number" name="{{ machine.name }}" min="0" value="0"></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <button type="submit">期待値計算</button>
+</form>
+
+{% if results %}
+<h2>トップ10期待値</h2>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>台名</th>
+        <th>期待値(EV)</th>
+        <th>投資額</th>
+        <th>予想回収額</th>
+    </tr>
+    {% for r in results %}
+    <tr>
+        <td>{{ r.name }}</td>
+        <td>{{ r.ev|round(2) }}</td>
+        <td>{{ r.investment }}</td>
+        <td>{{ r.return|round(2) }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+</body>
+</html>
